@@ -39,9 +39,10 @@ const addContact = async (body) => {
   const { name, email, phone } = body;
 
   const contacts = await listContacts();
-  contacts.push({ id: nanoid(), name, email, phone });
+  const contact = { id: nanoid(), name, email, phone };
+  contacts.push(contact);
   await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return contacts;
+  return contact;
 };
 
 const updateContact = async ({ contactId }, body) => {
@@ -51,19 +52,28 @@ const updateContact = async ({ contactId }, body) => {
   const checkContact = contacts.map(({ id }) => id).includes(contactId);
 
   if (!checkContact) {
-    return  
+    return;
   }
+
+  const updatedContact = [];
 
   contacts.forEach((item) => {
     if (item.id === contactId) {
-      item.name = name;
-      item.email = email;
-      item.phone = phone;
+      name ? (item.name = name) : item.name;
+      email ? (item.email = email) : item.email;
+      phone ? (item.phone = phone) : item.phone;
+
+      updatedContact.push({
+        id: contactId,
+        name: item.name,
+        email: item.email,
+        phone: item.phone,
+      });
     }
   });
 
   await fs.writeFile(contactsPath, JSON.stringify(contacts));
-  return contacts;
+  return updatedContact[0];
 };
 
 module.exports = {

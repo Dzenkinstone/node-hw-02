@@ -33,7 +33,7 @@ const deleteController = async (req, res, next) => {
     return res.json(404, { message: "Not found" });
   }
 
-  res.json(200, deleteContact);
+  res.json(200, { message: "contact deleted" });
 };
 
 const putController = async (req, res, next) => {
