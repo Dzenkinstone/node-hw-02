@@ -39,7 +39,7 @@ const deleteController = async (req, res, next) => {
 const putController = async (req, res, next) => {
   const replaceContact = await updateContact(req.params, req.body);
 
-  res.json(201, replaceContact);
+  res.json(200, replaceContact);
 };
 
 module.exports = {

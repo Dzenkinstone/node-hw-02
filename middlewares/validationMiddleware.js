@@ -23,7 +23,7 @@ module.exports = {
 
   putContactValidation: (req, res, next) => {
     if (!req.body.name && !req.body.email && !req.body.phone) {
-      res.json(400, { message: "missing fields" });
+      return res.json(400, { message: "missing fields" });
     }
 
     const schema = Joi.object({
