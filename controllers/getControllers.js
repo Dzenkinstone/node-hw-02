@@ -39,6 +39,10 @@ const deleteController = async (req, res, next) => {
 const putController = async (req, res, next) => {
   const replaceContact = await updateContact(req.params, req.body);
 
+  if (!replaceContact) {
+    return res.json(404, { message: "Not found" });
+  }
+
   res.json(200, replaceContact);
 };
 
